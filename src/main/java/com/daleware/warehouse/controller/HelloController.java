@@ -1,10 +1,11 @@
-package com.daleware.warehouse;
+package com.daleware.warehouse.controller;
 
+import com.daleware.warehouse.dao.UnshippedPackageDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,8 +18,11 @@ public class HelloController {
     @Value("${default.message}")
     private String defaultMessage;
 
+    @Autowired
+    private UnshippedPackageDao unshippedPackageDao;
+
     @RequestMapping(method = RequestMethod.GET)
-    public String printWelcome(@RequestParam(value = "name", required = false, defaultValue = "stranger") String name, ModelMap model) {
+    public String printWelcome(@RequestParam(value = "name", required = false, defaultValue = "stranger") String name, Model model) {
     /*
         Note: Alternately, you can also use this:
             public String printWelcome(String name, ModelMap model)
@@ -26,6 +30,7 @@ public class HelloController {
         @RequestParam annotation.
     */
         model.addAttribute("message", defaultMessage);
+        model.addAttribute("unshippedPackage", unshippedPackageDao.loadUnshippedPackage("zhuyisong1994@gmai.com", "4011200296908").getCheckedDate());
         return "hello";
     }
 

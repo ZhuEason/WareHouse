@@ -22,4 +22,10 @@
         <property name="location" value="classpath:/application.properties" />
     </bean>
 
+    <bean id="wareHouseDynamoDBClient" class="com.daleware.warehouse.basic.WareHouseDynamoDBClient"/>
+
+    <bean id="wareHouseDynamoDBMapper" class="com.daleware.warehouse.basic.WareHouseDynamoDBMapper"/>
+
+    <bean id="unshippedPackageDao" class="com.daleware.warehouse.dao.UnshippedPackageDao" />
+
 </beans>

@@ -8,7 +8,7 @@ apply plugin: 'war'
 
 tomcatRun {
     httpPort = 8080
-    contextPath = "/hello-springmvc"
+    contextPath = "/WareHouse"
 }
 
 repositories {
@@ -28,6 +28,17 @@ dependencies {
     tomcat "org.apache.tomcat:catalina:${tomcatVersion}",
             "org.apache.tomcat:coyote:${tomcatVersion}",
             "org.apache.tomcat:jasper:${tomcatVersion}"
+
+    // https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-dynamodb
+    compile group: 'com.amazonaws', name: 'aws-java-sdk-dynamodb', version: '1.11.430'
+
+    // https://logging.apache.org/log4j/2.x/maven-artifacts.html
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.1'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.1'
+    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-web
+    compile group: 'org.apache.logging.log4j', name: 'log4j-web', version: '2.11.1'
+
+
 }
 
 buildscript {

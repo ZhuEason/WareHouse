@@ -11,6 +11,7 @@
 </head>
 <body>
 Message : <b>${message}</b>
+UnshippedPackage: ${unshippedPackage}
 <br />
 </body>
 </html>
