@@ -5,52 +5,48 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
-import java.util.Date;
-
-@DynamoDBTable(tableName = "WAREHOUSE_UNSHIPPED_PACKAGE")
-public class DynamoDBUnshippedPackage {
+@DynamoDBTable(tableName =UnshippedItemConstants.TABLE_NAME)
+public class DynamoDBUnshippedItem {
     private final static String DEFAULT_EMPTY_STRING = "";
     private final static Double DEFAULT_DOUBLE_VALUE = 0.0;
     private final static Integer DEFAULT_INTEGER_VALUE = 0;
 
     private String userEmail;
-    private String upcSku;
+    private String trackingNumber_UPCSKU;
+    private String trackingNumber;
+    private String UPCSKU;
     private Integer boxIndex;
     private String checkedDate;
-    private String claimedValue;
     private String store;
 
     private Double unitPrice;
     private Integer quantity;
     private String itemName;
 
-    private String trackingNumber;
-
-    public DynamoDBUnshippedPackage() {
+    public DynamoDBUnshippedItem() {
     }
 
-    public DynamoDBUnshippedPackage(String userEmail) {
+    public DynamoDBUnshippedItem(String userEmail) {
         this.userEmail = userEmail;
     }
 
-    public DynamoDBUnshippedPackage(String userEmail, String upcSku) {
+    public DynamoDBUnshippedItem(String userEmail, String trackingNumber_UPCSKU) {
         this.userEmail = userEmail;
-        this.upcSku = upcSku;
+        this.trackingNumber_UPCSKU = trackingNumber_UPCSKU;
         //setDefaultValue();
     }
 
     private void setDefaultValue() {
         this.boxIndex = DEFAULT_INTEGER_VALUE;
         this.checkedDate = DEFAULT_EMPTY_STRING;
-        this.claimedValue = DEFAULT_EMPTY_STRING;
         this.store = DEFAULT_EMPTY_STRING;
         this.unitPrice = DEFAULT_DOUBLE_VALUE;
         this.quantity = DEFAULT_INTEGER_VALUE;
         this.itemName = DEFAULT_EMPTY_STRING;
-        this.trackingNumber = DEFAULT_EMPTY_STRING;
+        this.trackingNumber_UPCSKU = DEFAULT_EMPTY_STRING;
     }
 
-    @DynamoDBHashKey(attributeName = UnshippedPacakgeConstants.USER_EMAIL)
+    @DynamoDBHashKey(attributeName = UnshippedItemConstants.USER_EMAIL)
     public String getUserEmail() {
         return userEmail;
     }
@@ -59,16 +55,16 @@ public class DynamoDBUnshippedPackage {
         this.userEmail = userEmail;
     }
 
-    @DynamoDBRangeKey(attributeName = UnshippedPacakgeConstants.UPC_SKU)
-    public String getUpcSku() {
-        return upcSku;
+    @DynamoDBRangeKey(attributeName = UnshippedItemConstants.TRACKINGNUMBER_UPCSKU)
+    public String getTrackingNumber_UPCSKU() {
+        return trackingNumber_UPCSKU;
     }
 
-    public void setUpcSku(String upcSku) {
-        this.upcSku = upcSku;
+    public void setTrackingNumber_UPCSKU(String trackingNumber_UPCSKU) {
+        this.trackingNumber_UPCSKU = trackingNumber_UPCSKU;
     }
 
-    @DynamoDBAttribute(attributeName = UnshippedPacakgeConstants.BOX_INDEX)
+    @DynamoDBAttribute(attributeName = UnshippedItemConstants.BOX_INDEX)
     public Integer getBoxIndex() {
         return boxIndex;
     }
@@ -77,7 +73,7 @@ public class DynamoDBUnshippedPackage {
         this.boxIndex = boxIndex;
     }
 
-    @DynamoDBAttribute(attributeName = UnshippedPacakgeConstants.CHECKED_DATE)
+    @DynamoDBAttribute(attributeName = UnshippedItemConstants.CHECKED_DATE)
     public String getCheckedDate() {
         return checkedDate;
     }
@@ -86,16 +82,7 @@ public class DynamoDBUnshippedPackage {
         this.checkedDate = checkedDate;
     }
 
-    @DynamoDBAttribute(attributeName = UnshippedPacakgeConstants.CLAIMED_VALUE)
-    public String getClaimedValue() {
-        return claimedValue;
-    }
-
-    public void setClaimedValue(String claimedValue) {
-        this.claimedValue = claimedValue;
-    }
-
-    @DynamoDBAttribute(attributeName = UnshippedPacakgeConstants.STORE)
+    @DynamoDBAttribute(attributeName = UnshippedItemConstants.STORE)
     public String getStore() {
         return store;
     }
@@ -104,7 +91,7 @@ public class DynamoDBUnshippedPackage {
         this.store = store;
     }
 
-    @DynamoDBAttribute(attributeName = UnshippedPacakgeConstants.UNIT_PRICE)
+    @DynamoDBAttribute(attributeName = UnshippedItemConstants.UNIT_PRICE)
     public Double getUnitPrice() {
         return unitPrice;
     }
@@ -113,7 +100,7 @@ public class DynamoDBUnshippedPackage {
         this.unitPrice = unitPrice;
     }
 
-    @DynamoDBAttribute(attributeName = UnshippedPacakgeConstants.QUANTITY)
+    @DynamoDBAttribute(attributeName = UnshippedItemConstants.QUANTITY)
     public Integer getQuantity() {
         return quantity;
     }
@@ -122,7 +109,7 @@ public class DynamoDBUnshippedPackage {
         this.quantity = quantity;
     }
 
-    @DynamoDBAttribute(attributeName = UnshippedPacakgeConstants.ITEM_NAME)
+    @DynamoDBAttribute(attributeName = UnshippedItemConstants.ITEM_NAME)
     public String getItemName() {
         return itemName;
     }
@@ -131,12 +118,28 @@ public class DynamoDBUnshippedPackage {
         this.itemName = itemName;
     }
 
-    @DynamoDBAttribute(attributeName = UnshippedPacakgeConstants.TRACKING_NUMBER)
-    public String getTrackingNumber() {
-        return trackingNumber;
+    public DynamoDBUnshippedItem splitTrackingNumber_UPCSKU() {
+        String[] splits = trackingNumber_UPCSKU.split("_");
+        setTrackingNumber(splits[0]);
+        setUPCSKU(splits[1]);
+
+        return this;
     }
 
     public void setTrackingNumber(String trackingNumber) {
         this.trackingNumber = trackingNumber;
     }
+
+    public String getTrackingNumber() {
+        return trackingNumber;
+    }
+
+    public void setUPCSKU(String UPCSKU) {
+        this.UPCSKU = UPCSKU;
+    }
+
+    public String getUPCSKU() {
+        return UPCSKU;
+    }
+
 }

@@ -1,10 +1,10 @@
 package com.daleware.warehouse.model;
 
-public interface UnshippedPacakgeConstants {
+public interface UnshippedItemConstants {
+    String TABLE_NAME = "WAREHOUSE_UNSHIPPED_ITEM";
     String USER_EMAIL = "UserEmail";
-    String UPC_SKU = "upc_sku";
     String UNIT_PRICE = "UnitPrice";
-    String TRACKING_NUMBER = "TrackingNumber";
+    String TRACKINGNUMBER_UPCSKU = "TrackingNumber_UPCSKU";
     String STORE = "Store";
     String QUANTITY = "Quantity";
     String ITEM_NAME = "ItemName";
